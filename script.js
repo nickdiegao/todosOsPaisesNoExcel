@@ -18,11 +18,15 @@ async function createExcelFile() {
 
     const countries = countriesData.map(country => ({
         name: country.name.common,
+        continent: country.continents ? country.continents[0] : 'N/A',
         capital: country.capital ? country.capital[0] : 'N/A',
-        population: country.population,
         language: country.languages ? Object.values(country.languages).join(', ') : 'N/A',
-        currency: country.currencies ? Object.values(country.currencies).map(c => c.name).join(', ') : 'N/A'
-    }));
+        // religion: 'N/A', 
+        // economy: 'N/A',
+        currency: country.currencies ? Object.values(country.currencies).map(c => c.name).join(', ') : 'N/A',
+        // regime: country.government ? country.government : 'N/A', 
+        population: country.population
+    })).sort((a, b) => a.name.localeCompare(b.name));
 
     // Cria uma nova planilha
     const worksheet = xlsx.utils.json_to_sheet(countries);
